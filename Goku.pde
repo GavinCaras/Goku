@@ -10,8 +10,10 @@ float WaitingTime;
 void setup() {
   //Screen size
   size(640, 360);  
+  
   //Time duration before changing backgrounds
   WaitingTime = 10000;
+  
   //Goku's image
   gokuCounter = 0;
   
@@ -31,6 +33,7 @@ void draw() {
   else {
     fill(0);
   }
+  
   //Making Goku move with the mouse cursor
   image(goku[gokuCounter], mouseX, mouseY);
   if (frameCount % 5 == 0) {
