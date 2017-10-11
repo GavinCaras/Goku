@@ -6,10 +6,18 @@ PImage background;
 PImage[] goku = new PImage[7];
 int gokuCounter;
 float WaitingTime;
+import ddf.minim.*;
+Minim minim;
+AudioPlayer song;
 
 void setup() {
   //Screen size
   size(640, 360);  
+  
+  //Background music
+  minim = new Minim(this);  
+  song = minim.loadFile("[Dragon Ball Z Kai] Opening 2 Japones.mp3");
+  song.play();
   
   //Time duration before changing backgrounds
   WaitingTime = 10000;
@@ -26,6 +34,12 @@ void draw() {
   //First Background
   background = loadImage("FirstBackground.jpg");
   background(background);
+  
+  if (mousePressed == true){
+    noCursor();
+  } else {
+    noCursor();
+  }
   
   if (millis() > WaitingTime) {
       background(255, 0, 0);
