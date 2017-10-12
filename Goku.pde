@@ -2,7 +2,7 @@
 // State Variables Assignment
 
 //Global Variables
-PImage background;
+PImage Firstbackground;
 PImage[] goku = new PImage[7];
 int gokuCounter;
 float WaitingTime;
@@ -17,7 +17,7 @@ void setup() {
   //Background music
   minim = new Minim(this);  
   song = minim.loadFile("[Dragon Ball Z Kai] Opening 2 Japones.mp3");
-  song.play();
+  song.loop();
   
   //Time duration before changing backgrounds
   WaitingTime = 10000;
@@ -32,8 +32,8 @@ void setup() {
 
 void draw() {
   //First Background
-  background = loadImage("FirstBackground.jpg");
-  background(background);
+  Firstbackground = loadImage("FirstBackground.jpg");
+  background(Firstbackground);
   
   if (mousePressed == true){
     noCursor();
@@ -48,7 +48,7 @@ void draw() {
     fill(0);
   }
   
-  //Making Goku move with the mouse cursor
+//Making Goku move using the mouse
   image(goku[gokuCounter], mouseX, mouseY);
   if (frameCount % 5 == 0) {
     gokuCounter++;
