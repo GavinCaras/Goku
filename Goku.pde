@@ -1,14 +1,13 @@
 // Gavin Caras
 // State Variables Assignment
 
-//Global Variables
+//Global Variables.
 PImage MenuScreen;
 PImage Background1;
+PImage Background2;
 PImage[] goku = new PImage[7];
 int gokuCounter;
 int state;
-int background1Duration, background2Duration, background3Duration;
-int lastTimeBackgroundChanged;
 float WaitingTime;
 String message;
 import ddf.minim.*;
@@ -16,143 +15,60 @@ Minim minim;
 AudioPlayer song;
 
 void setup() {
-  //Screen size
+  //Screen size.
   size(640, 360);  
   state = 1;
+
+  //Loading background images.
   MenuScreen = loadImage("MenuScreen.gif");
   Background1 = loadImage("FirstBackground.jpg");
+  Background2 = loadImage("SecondBackground.png");
+
+  //Loading the background music
   minim = new Minim(this);  
   song = minim.loadFile("[Dragon Ball Z Kai] Opening 2 Japones.mp3");
-  song.loop();
-  background1Duration = 3000;
-  background2Duration = 500;
-  background3Duration = 3000;
-  lastTimeBackgroundChanged = millis();
-//} 
-  //Background music
-  //minim = new Minim(this);  
-  //song = minim.loadFile("[Dragon Ball Z Kai] Opening 2 Japones.mp3");
-  //song.loop();
+  song.loop(); 
+
+  //Time duration before changing backgrounds.
+  WaitingTime = 20000;
   
-  //Time duration before changing backgrounds
-  //WaitingTime = 10000;
-  
-  //Goku's image
+  //Goku's image.
   gokuCounter = 0;
-  
-  for (int i=0; i<goku.length; i++) {
+    for (int i=0; i<goku.length; i++) {
     goku[i] = loadImage( i + ".png");
   }
 }
 void draw() {
-
+   //Menu screen.
    if (state == 1) {
     background(MenuScreen);
     String message = "Press any key";
     fill(255);
     textSize(40);
     text(message, 180, 250);
-   
-  }
-    else if (state == 2) {
-    checkIfBackgroundSwitched();
-    displayCorrectBackground();
-    drawRunningGoku();    
-  }
-    else if (state == 3) {
-    checkIfBackgroundSwitched();
-    displayCorrectBackground();
-    drawRunningGoku();    
-  }
-    else if (state == 4) {
-    checkIfBackgroundSwitched();
-    displayCorrectBackground();
-    drawRunningGoku();     
-  }
-    
+   }
+    //First background.
+   else if (millis() > WaitingTime) {
+     background(Background1);
+     drawRunningGoku();
+   }
+   //Second background.
+   else if (millis() < WaitingTime) {
+     background(Background2);
+     drawRunningGoku();
+ }
+
 }
 
-  //if (mousePressed == true){
-    //noCursor();
- // } else {
-  //  noCursor();
-  //}
-  
-  //if (millis() > WaitingTime) {
-      //background(255, 0, 0);
-  //}
- // else {
-   // fill(0);
- // }
-  
-//Making Goku move using the mouse
-  //image(goku[gokuCounter], mouseX, 250);
-  //if (frameCount % 5 == 0) {
-    //gokuCounter++;
-   // gokuCounter = gokuCounter % goku.length;
-  //}
-//}
-
-
-void checkIfBackgroundSwitched() {
-  if (state == 2) { //Background 3
-    if (millis() > lastTimeBackgroundChanged + background3Duration) {
-      state = 3;
-      lastTimeBackgroundChanged = millis();
-    }
-  }
-  
-  else if (state == 3) { //Background 2
-    if (millis() > lastTimeBackgroundChanged + background2Duration) {
-      state = 4;
-      lastTimeBackgroundChanged = millis();
-    }
-  }
-
-  else if (state == 4) { //Background 1
-  if (millis() > lastTimeBackgroundChanged + background1Duration) {
-    state = 2;
-    lastTimeBackgroundChanged = millis();
-    }
-  }
-}
-
-void displayCorrectBackground() {
-  if (state == 2) {
-    drawBackground1();
-  } else if (state == 3) {
-    drawBackground2();
-  } else if (state == 4) {
-    drawBackground3();
-  }
-}  
-
-void drawBackground1() {
-  background(Background1);
-}
-
-void drawBackground2() {
-  fill(255, 255, 0);
-}
-
-void drawBackground3() {
-  fill(0, 255, 0);
-}
-
+//Function in running animated Goku.
 void drawRunningGoku(){
-  //background(Background1);
-    
-  //WaitingTime = 10000;
-  
-  //gokuCounter = 0;
-  //for (int i=0; i<goku.length; i++) {
-    //goku[i] = loadImage( i + ".png");
-  //}
+  //Removes the mouse cursor.
   if (mousePressed == true){
     noCursor();
  } else {
     noCursor();
   }
+  //Animating Goku images
   image(goku[gokuCounter], mouseX, 250);
   if (frameCount % 5 == 0) {
     gokuCounter++;
@@ -161,6 +77,7 @@ void drawRunningGoku(){
   state = 2;
 }
 
+//Gets to state 2 when any keys are pressed.
 void keyPressed() {
  state = 2;
 }
